@@ -188,3 +188,30 @@ firstGameContainer.appendChild(firstGame)
 const secondGame = document.createElement('div')
 secondGame.innerHTML = `<h2>${second.name}</h2>`
 secondGameContainer.appendChild(secondGame)
+
+// create a search bar to filter games by name
+const gamesHeader = document.querySelector('#games-header')
+const searchBar = document.createElement('input')
+
+searchBar.setAttribute('type', 'text');
+searchBar.setAttribute('id', 'search-bar');
+searchBar.setAttribute('placeholder', 'Search for a game...');
+
+gamesHeader.appendChild(searchBar)
+
+//function to search games by name
+function searchGamesByName(searchTerm) {
+    const lowerCaseSearchTerm = searchTerm.toLowerCase();
+
+    const filteredGames = GAMES_JSON.filter((game) => {
+        return game.name.toLowerCase().includes(lowerCaseSearchTerm);
+    });
+
+    deleteChildElements(gamesContainer);
+    addGamesToPage(filteredGames);
+}
+
+searchBar.addEventListener('input', (event) => {
+    const searchTerm = event.target.value;
+    searchGamesByName(searchTerm);
+});
